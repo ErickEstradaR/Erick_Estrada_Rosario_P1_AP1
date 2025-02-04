@@ -12,7 +12,6 @@ public class Services ()
         
     }
     
-    
      public async Task<bool> Existe(int Id)
      {
          return true;
@@ -33,7 +32,6 @@ public class Services ()
     {
         return true;
     }
-    
     
     public async Task<Modelo?> Buscar(int id)
     {
