@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using Erick_Estrada_P1_AP1.Models;
+using Erick_Estrada_Rosario_P1_AP1.Models;
 
-namespace Erick_Estrada_P1_AP1.Services;
+namespace Erick_Estrada_Rosario_P1_AP1.Services;
 
 public class Services ()
 {
