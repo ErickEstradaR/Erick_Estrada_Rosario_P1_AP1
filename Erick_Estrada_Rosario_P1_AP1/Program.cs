@@ -1,5 +1,6 @@
 using Erick_Estrada_Rosario_P1_AP1.DAL;
 using Erick_Estrada_Rosario_P1_AP1.Components;
+using Erick_Estrada_Rosario_P1_AP1.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddRazorComponents()
 
 var ConStr=builder.Configuration.GetConnectionString("SqlConStr");
 builder.Services.AddDbContextFactory<Contexto>(o=>o.UseSqlServer(ConStr));
+builder.Services.AddScoped<AportesService>();
 
 var app = builder.Build();
 
