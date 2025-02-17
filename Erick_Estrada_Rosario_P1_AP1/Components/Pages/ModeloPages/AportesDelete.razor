@@ -1,0 +1,57 @@
+@page "/Aportes/Delete/{AporteId:int}"
+@inject AportesService aporteService
+@inject NavigationManager nav
+@rendermode InteractiveServer
+
+
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header text-center">
+            <h5><strong>Datos del aporte</strong></h5>
+        </div>
+    
+        @*Body*@
+        <div class="card-body">
+            <div class="text-center">
+                <h5><strong>Eliminar aporte</strong></h5>
+                <h6 class="text-bg-danger">Está seguro de que desea eliminar?</h6>
+            </div>
+            
+            
+            <ul class="mt-4">
+                <li><strong>Id: </strong>@Aporte.AporteId</li>
+                <li><strong>Nombre de la persona: </strong>@Aporte.NombrePersona</li>
+                <li><strong>Fecha de Registro: </strong>@Aporte.FechaRegistro.ToString("d")</li>
+                <li><strong>Monto: </strong>@Aporte.Monto.ToString("N2")</li>
+                <li><strong>Observaci&oacute;n: </strong>@Aporte.Observacion</li>
+            </ul>
+        </div>
+        
+        @*Footer*@
+        <div class="card-footer text-center">
+            <a href="/Aportes" class="btn btn-primary"> <span class="bi bi-arrow-left"></span> Volver</a>
+            <button type="button" class="btn btn-danger bi bi-trash" @onclick="Eliminar"> </button>
+        </div>
+    </div>
+</div>
+
+@code
+{
+
+    protected override async Task OnInitializedAsync()
+    {
+        Aporte = await aporteService.Buscar(AporteId);
+    }
+    [Parameter]
+    public int AporteId { get; set; }
+    private Aportes Aporte { get; set; } = new Aportes();
+    
+    public async Task Eliminar()
+    {
+        var eliminado = await aporteService.Eliminar(Aporte.AporteId);
+        if (eliminado)
+        {
+            nav.NavigateTo("/Aportes");
+        }
+    }
+}
