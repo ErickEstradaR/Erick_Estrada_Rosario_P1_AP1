@@ -7,6 +7,7 @@ public class Aportes
     public int AporteId   { get; set; }
     
     [Required(ErrorMessage = "Este campo es requerido")]
+    [MaxLength(50)]
     public string NombrePersona { get; set; }
     
     [Required(ErrorMessage = "Este campo es requerido")]
