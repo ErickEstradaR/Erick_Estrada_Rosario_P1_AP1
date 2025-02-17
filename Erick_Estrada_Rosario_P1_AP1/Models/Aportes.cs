@@ -17,5 +17,8 @@ public class Aportes
     [Range(0,int.MaxValue)]
     public double Monto { get; set; }
     
+    [Required]
+    public DateTime FechaRegistro { get; set; } = DateTime.Now;
+
 }
 
