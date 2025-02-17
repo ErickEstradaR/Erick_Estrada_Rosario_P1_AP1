@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Erick_Estrada_Rosario_P1_AP1.Services;
 
-public class Services (IDbContextFactory<Contexto> DbFactory)
+public class AportesService (IDbContextFactory<Contexto> DbFactory)
 {
     /// <summary>
     /// Este metodo guarda un aporte si no existe en la base de datos, si existe lo modifica
