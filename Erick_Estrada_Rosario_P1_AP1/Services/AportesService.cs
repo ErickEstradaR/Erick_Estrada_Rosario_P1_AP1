@@ -15,7 +15,7 @@ public class AportesService (IDbContextFactory<Contexto> DbFactory)
     /// <returns>Retorna un booleano dependiendo de si fue exitoso o fallido</returns>
     public async Task<bool> Guardar(Aportes aportes)
     {
-        if (await Existe(aportes.AporteId))
+        if (!await Existe(aportes.AporteId))
         {
             return await Insertar(aportes);
         }
