@@ -1,0 +1,90 @@
+@page "/Aportes/Create"
+@inject AportesService aportesService
+@inject NavigationManager nav
+@rendermode InteractiveServer
+
+<PageTitle>Crear Aporte</PageTitle>
+
+@if (!string.IsNullOrEmpty(MensajeError))
+{
+    <div class="alert-danger">
+        @MensajeError
+    </div>
+}
+
+<EditForm Model="Aporte" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header text-center">
+                <h5 class="card-title">Registro de Aportes</h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-3">
+                    <label>
+                        <strong>AporteId</strong>
+                        <InputNumber class="form-control" @bind-Value="@Aporte.AporteId" readonly/>
+                    </label>
+
+                </div>
+
+                <div class="mb-3">
+                    <label>
+                        <strong>Nombre de la persona</strong>
+                        <InputText class="form-control" @bind-Value="@Aporte.NombrePersona"/>
+                    </label>
+                </div>
+
+                <div class="mb-3">
+                    <label>
+                        <strong>Observación</strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="Aporte.Observacion"/>
+                </div>
+
+                <div class="mb-3">
+                    <label>
+                        <strong>Monto</strong>
+                        <InputNumber class="form-control" @bind-Value="Aporte.Monto"/>
+                    </label>
+                </div>
+                
+                <div class="mb-3">
+                    <label>
+                        <strong>Fecha de registro</strong>
+                        <InputDate class="form-control" @bind-Value="Aporte.FechaRegistro" readonly></InputDate>
+                    </label>
+                </div>
+
+            </div>
+            @*Footer*@
+            <div class="card-footer mt-2 text-center">
+                <button type="submit" class="btn btn-primary bi bi-floppy">Guardar</button>
+                <a href="/Aportes" class="btn btn-secondary"><span class="bi bi-arrow-left"></span> Retroceder</a>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code
+{
+    public Aportes Aporte { get; set; } = new Aportes();
+    public string MensajeError { get; set; } = String.Empty;
+
+    private async Task Guardar()
+    {
+        var creado = await aportesService.Guardar(Aporte);
+        if (creado)
+        {
+            nav.NavigateTo("/Aportes");
+        }
+        else
+        {
+            MensajeError = "El aporte no ha sido guardado.";
+        }
+    }
+}
