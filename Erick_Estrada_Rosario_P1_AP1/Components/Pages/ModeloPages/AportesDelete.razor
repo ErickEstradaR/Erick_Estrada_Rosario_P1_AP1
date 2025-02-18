@@ -52,9 +52,8 @@
     public int AporteId { get; set; }
     @*Instancia un nuevo aporte*@
     private Aportes Aporte { get; set; } = new Aportes();
-    
+    @*Mensaje de error*@
     private string MensajeError { get; set; } = String.Empty;
-    
     @*Método que elimina un aporte*@
     public async Task Eliminar()
     {
