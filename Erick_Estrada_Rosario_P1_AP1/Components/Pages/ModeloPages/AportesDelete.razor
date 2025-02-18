@@ -3,7 +3,12 @@
 @inject NavigationManager nav
 @rendermode InteractiveServer
 
-
+@if (!string.IsNullOrEmpty(MensajeError))
+{
+<div class="alert-danger">
+    @MensajeError
+</div>
+}
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header text-center">
@@ -17,7 +22,7 @@
                 <h6 class="text-bg-danger">Está seguro de que desea eliminar?</h6>
             </div>
             
-            
+            @*Datos del aporte a eliminar*@
             <ul class="mt-4">
                 <li><strong>Id: </strong>@Aporte.AporteId</li>
                 <li><strong>Nombre de la persona: </strong>@Aporte.NombrePersona</li>
@@ -37,21 +42,30 @@
 
 @code
 {
-
+    @*Busca el aporte a ser eliminado*@
     protected override async Task OnInitializedAsync()
     {
         Aporte = await aporteService.Buscar(AporteId);
     }
+    @*Parametro para la directiva page*@
     [Parameter]
     public int AporteId { get; set; }
+    @*Instancia un nuevo aporte*@
     private Aportes Aporte { get; set; } = new Aportes();
     
+    private string MensajeError { get; set; } = String.Empty;
+    
+    @*Método que elimina un aporte*@
     public async Task Eliminar()
     {
         var eliminado = await aporteService.Eliminar(Aporte.AporteId);
         if (eliminado)
         {
             nav.NavigateTo("/Aportes");
+        }
+        else
+        {
+            MensajeError = "No se ha podido eliminar el aporte";
         }
     }
 }
