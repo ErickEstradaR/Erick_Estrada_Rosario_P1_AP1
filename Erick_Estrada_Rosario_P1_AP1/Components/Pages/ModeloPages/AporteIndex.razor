@@ -14,6 +14,7 @@
                     <InputSelect class="form-select" @bind-Value="Filtro">
                         <option value="" selected disabled>Elija una opci&oacute;n</option>
                         <option value="AporteId">AporteId</option>
+                        <option value="Fecha">Fecha</option>
                     </InputSelect>
                 </div>
                 <div class="col-4">
@@ -26,6 +27,23 @@
                         </a>
                     </div>
                 </div>
+                <div class="row mt-3">
+
+                    @*Desde*@
+                    <div class="col-3">
+                        <label class="col-form-label"><strong>Desde</strong></label>
+                        <InputDate class="form-control" @bind-Value="Desde"></InputDate>
+                    </div>
+
+                    @*Hasta*@
+                    <div class="col-3">
+                        <label class="col-form-label"><strong>Hasta</strong></label>
+                        <div class="input-group">
+                            <InputDate class="form-control" @bind-Value="Hasta"></InputDate>
+                        </div>
+
+                    </div>
+                    </div>
             </div>
 
             <table class="table table-hover">
@@ -33,9 +51,7 @@
                 <tr>
                     <th>AporteId</th>
                     <th>Persona</th>
-                    <th>Observaci&oacute;n</th>
                     <th>Monto</th>
-                    <th>Fecha Registro</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -46,9 +62,7 @@
                     <tr>
                         <td>@aportes.AporteId</td>
                         <td>@aportes.NombrePersona</td>
-                        <td>@aportes.Observacion</td>
                         <td>@aportes.Monto.ToString("N2")</td>
-                        <td>@aportes.FechaRegistro.ToString("d")</td>
                         <td class="text-center">
                             <a class="btn btn-outline-primary bi bi-pencil-square" href="/Aportes/Edit/@aportes.AporteId"></a>
                         </td>
@@ -71,10 +85,16 @@
     public List<Aportes> ListaAportes { get; set; } = new List<Aportes>();
     public string Filtro { get; set; } = string.Empty;
     public string ValorFiltro { get; set; } = string.Empty;
+    
+    public DateTime? Desde { get; set; }
+
+    public DateTime? Hasta { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         ListaAportes = await aportesService.Listar(a => a.AporteId > 0);
+        Desde = null;
+        Hasta = null;
     }
 
     private async Task Buscar()
@@ -86,7 +106,11 @@
                 ListaAportes = await aportesService
                     .Listar(a => a.AporteId == AporteId);
             }
-            
+        }
+        else if (Filtro == "Fecha")
+        {
+            ListaAportes = await aportesService
+                .Listar(a => a.FechaRegistro >= Desde && a.FechaRegistro <= Hasta);
         }
     }
 
@@ -95,6 +119,8 @@
         ListaAportes = await aportesService.Listar(a => a.AporteId > 0);
         Filtro = string.Empty;
         ValorFiltro = string.Empty;
+        Desde = null;
+        Hasta = null;
     }
 }
 
