@@ -24,14 +24,15 @@
 
             <div class="card-body">
 
+                @*Id del aporte*@
                 <div class="mb-3">
                     <label>
                         <strong>AporteId</strong>
                         <InputNumber class="form-control" @bind-Value="@Aporte.AporteId" readonly/>
                     </label>
-
                 </div>
 
+                @*Nombre de la persona*@
                 <div class="mb-3">
                     <label>
                         <strong>Nombre de la persona</strong>
@@ -39,6 +40,7 @@
                     </label>
                 </div>
 
+                @*Observación del aporte*@
                 <div class="mb-3">
                     <label>
                         <strong>Observación</strong>
@@ -46,6 +48,7 @@
                     <InputText class="form-control" @bind-Value="Aporte.Observacion"/>
                 </div>
 
+                @*Monto del aporte*@
                 <div class="mb-3">
                     <label>
                         <strong>Monto</strong>
@@ -53,6 +56,7 @@
                     </label>
                 </div>
                 
+                @*Fecha de registro*@
                 <div class="mb-3">
                     <label>
                         <strong>Fecha de registro</strong>
@@ -72,9 +76,12 @@
 
 @code
 {
+    @*Instancia un aporte*@
     public Aportes Aporte { get; set; } = new Aportes();
+    @*Mensaje de error para validaciones*@
     public string MensajeError { get; set; } = String.Empty;
 
+    @*Método Guardar*@
     private async Task Guardar()
     {
         var creado = await aportesService.Guardar(Aporte);
