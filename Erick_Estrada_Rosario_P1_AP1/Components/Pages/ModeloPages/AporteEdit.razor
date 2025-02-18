@@ -24,6 +24,7 @@
 
             <div class="card-body">
 
+                @*Id del aporte*@
                 <div class="mb-3">
                     <label>
                         <strong>AporteId</strong>
@@ -32,6 +33,7 @@
 
                 </div>
 
+                @*Nombre de la persona*@
                 <div class="mb-3">
                     <label>
                         <strong>Nombre de la persona</strong>
@@ -39,6 +41,7 @@
                     </label>
                 </div>
 
+                @*Observacion del aporte*@
                 <div class="mb-3">
                     <label>
                         <strong>Observación</strong>
@@ -46,6 +49,7 @@
                     <InputText class="form-control" @bind-Value="Aporte.Observacion"/>
                 </div>
 
+                @*Monto del aporte*@
                 <div class="mb-3">
                     <label>
                         <strong>Monto</strong>
@@ -53,6 +57,7 @@
                     </label>
                 </div>
 
+                @*Fecha de registro del aporte*@
                 <div class="mb-3">
                     <label>
                         <strong>Fecha de registro</strong>
@@ -72,22 +77,29 @@
 
 @code
 {
+    @*Metodo para buscar el aporte*@
     protected override async Task OnInitializedAsync()
     {
         Aporte = await aporteService.Buscar(AporteId);
     }
-
+    @*Parametro para la directiva page*@ 
     [Parameter] 
     public int AporteId { get; set; }
+    @*Nuevo Aporte, que recibe valores a traves del service*@
     public Aportes Aporte { get; set; } = new Aportes();
+    @*Mensaje de error para validaciones*@
     public string MensajeError { get; set; } = String.Empty;
-
+    @*Metodo Modificar*@
     private async Task Modificar()
     {
         var creado = await aporteService.Guardar(Aporte);
         if (creado)
         {
             nav.NavigateTo("/Aportes");
+        }
+        else
+        {
+            MensajeError = "El aporte no ha podido ser modificado";
         }
     }
 }
