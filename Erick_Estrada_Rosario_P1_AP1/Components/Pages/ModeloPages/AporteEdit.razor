@@ -80,6 +80,10 @@
     protected override async Task OnInitializedAsync()
     {
         Aporte = await aporteService.Buscar(AporteId);
+        if (Aporte == null)
+        {
+            MensajeError = "El aporte no fue encontrado.";
+        }
     }
     @*Parametro para la directiva page*@ 
     [Parameter] 
