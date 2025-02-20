@@ -37,6 +37,7 @@
                     <label>
                         <strong>Nombre de la persona</strong>
                         <InputText class="form-control" @bind-Value="@Aporte.NombrePersona"/>
+                        <ValidationMessage For="@(() => Aporte.NombrePersona)" />
                     </label>
                 </div>
 
@@ -46,6 +47,7 @@
                         <strong>Observación</strong>
                     </label>
                     <InputText class="form-control" @bind-Value="Aporte.Observacion"/>
+                    <ValidationMessage For="@(() => Aporte.Observacion)" />
                 </div>
 
                 @*Monto del aporte*@
@@ -53,6 +55,7 @@
                     <label>
                         <strong>Monto</strong>
                         <InputNumber class="form-control" @bind-Value="Aporte.Monto"/>
+                        <ValidationMessage For="@(() => Aporte.Monto)" />
                     </label>
                 </div>
 
