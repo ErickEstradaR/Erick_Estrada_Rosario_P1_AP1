@@ -77,8 +77,8 @@
             </table>
         </div>
         @*Footer*@
-        <div class="card-footer">
-            <label>Cantidad de aportes: @ListaAportes.Count |||</label>
+        <div class="card-footer d-flex justify-content-between">
+            <label>Cantidad de aportes: @ListaAportes.Count</label>
             <label>Total: @ListaAportes.Sum(a => a.Monto).ToString("N2")</label>
         </div>
     </div>
