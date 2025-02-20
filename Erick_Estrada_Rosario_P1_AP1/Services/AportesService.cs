@@ -47,6 +47,7 @@ public class AportesService (IDbContextFactory<Contexto> DbFactory)
         Contexto.Aportes.Add(aportes);
         return await Contexto.SaveChangesAsync() > 0;
     }
+    
     /// <summary>
     /// Modifica un aporte en la base de datos si este existe
     /// </summary>
