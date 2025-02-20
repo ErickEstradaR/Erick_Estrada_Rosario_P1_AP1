@@ -30,7 +30,6 @@
                         <strong>AporteId</strong>
                         <InputNumber class="form-control" @bind-Value="@Aporte.AporteId" readonly/>
                     </label>
-
                 </div>
 
                 @*Nombre de la persona*@
@@ -92,14 +91,21 @@
     @*Metodo Modificar*@
     private async Task Modificar()
     {
-        var creado = await aporteService.Guardar(Aporte);
-        if (creado)
+        try
         {
-            nav.NavigateTo("/Aportes");
+            var actualizado = await aporteService.Guardar(Aporte);
+            if (actualizado)
+            {
+                nav.NavigateTo("/Aportes");
+            }
+            else
+            {
+                MensajeError = "El aporte no ha podido ser modificado.";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            MensajeError = "El aporte no ha podido ser modificado";
+            MensajeError = $"Error al modificar el aporte: {ex.Message}";
         }
     }
 }
