@@ -15,6 +15,7 @@
                         <option value="" selected disabled>Elija una opci&oacute;n</option>
                         <option value="AporteId">AporteId</option>
                         <option value="Fecha">Fecha</option>
+                        <option value="Nombre">Nombre</option>
                     </InputSelect>
                 </div>
                 <div class="col-4">
@@ -118,6 +119,13 @@
         {
             ListaAportes = await aportesService
                 .Listar(a => a.FechaRegistro >= Desde && a.FechaRegistro <= Hasta);
+        }
+        
+        else if (ValorFiltro.Trim() != "" && Filtro == "Nombre")
+        {
+            ListaAportes = await aportesService
+                .Listar(a => a.NombrePersona.ToLower()
+                    .Contains(ValorFiltro.ToLower()));
         }
     }
 
