@@ -107,6 +107,7 @@
     @*Metodo para buscar segun el filtro elegido*@
     private async Task Buscar()
     {
+        @*Filtrar por id del aporte*@
         if (Filtro == "AporteId")
         {
             if (int.TryParse(ValorFiltro, out int AporteId))
@@ -115,12 +116,13 @@
                     .Listar(a => a.AporteId == AporteId);
             }
         }
+        @*Filtrar por fecha*@
         else if (Filtro == "Fecha")
         {
             ListaAportes = await aportesService
                 .Listar(a => a.FechaRegistro >= Desde && a.FechaRegistro <= Hasta);
         }
-        
+        @*Filtrar por nombre de la persona que realiza un aporte*@
         else if (ValorFiltro.Trim() != "" && Filtro == "Nombre")
         {
             ListaAportes = await aportesService
