@@ -30,7 +30,6 @@
                         <strong>AporteId</strong>
                         <InputNumber class="form-control" @bind-Value="@Aporte.AporteId" readonly/>
                     </label>
-
                 </div>
 
                 @*Nombre de la persona*@
@@ -38,6 +37,7 @@
                     <label>
                         <strong>Nombre de la persona</strong>
                         <InputText class="form-control" @bind-Value="@Aporte.NombrePersona"/>
+                        <ValidationMessage For="@(() => Aporte.NombrePersona)" />
                     </label>
                 </div>
 
@@ -47,6 +47,7 @@
                         <strong>Observación</strong>
                     </label>
                     <InputText class="form-control" @bind-Value="Aporte.Observacion"/>
+                    <ValidationMessage For="@(() => Aporte.Observacion)" />
                 </div>
 
                 @*Monto del aporte*@
@@ -54,6 +55,7 @@
                     <label>
                         <strong>Monto</strong>
                         <InputNumber class="form-control" @bind-Value="Aporte.Monto"/>
+                        <ValidationMessage For="@(() => Aporte.Monto)" />
                     </label>
                 </div>
 
@@ -81,6 +83,10 @@
     protected override async Task OnInitializedAsync()
     {
         Aporte = await aporteService.Buscar(AporteId);
+        if (Aporte == null)
+        {
+            MensajeError = "El aporte no fue encontrado.";
+        }
     }
     @*Parametro para la directiva page*@ 
     [Parameter] 
@@ -92,14 +98,21 @@
     @*Metodo Modificar*@
     private async Task Modificar()
     {
-        var creado = await aporteService.Guardar(Aporte);
-        if (creado)
+        try
         {
-            nav.NavigateTo("/Aportes");
+            var actualizado = await aporteService.Guardar(Aporte);
+            if (actualizado)
+            {
+                nav.NavigateTo("/Aportes");
+            }
+            else
+            {
+                MensajeError = "El aporte no ha podido ser modificado.";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            MensajeError = "El aporte no ha podido ser modificado";
+            MensajeError = $"Error al modificar el aporte: {ex.Message}";
         }
     }
 }

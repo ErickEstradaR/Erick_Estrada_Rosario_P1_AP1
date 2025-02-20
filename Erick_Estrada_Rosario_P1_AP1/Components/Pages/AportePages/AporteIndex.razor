@@ -11,12 +11,16 @@
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-3">
+                    
+                    @*Filtros*@
                     <InputSelect class="form-select" @bind-Value="Filtro">
                         <option value="" selected disabled>Elija una opci&oacute;n</option>
                         <option value="AporteId">AporteId</option>
                         <option value="Fecha">Fecha</option>
+                        <option value="Nombre">Nombre</option>
                     </InputSelect>
                 </div>
+                
                 <div class="col-4">
                     <div class="input-group">
                         <button type="button" class="btn btn-outline-secondary bi bi-arrow-clockwise" @onclick="Restablecer"></button>
@@ -76,8 +80,8 @@
             </table>
         </div>
         @*Footer*@
-        <div class="card-footer">
-            <label>Cantidad de aportes: @ListaAportes.Count |||</label>
+        <div class="card-footer d-flex justify-content-between">
+            <label>Cantidad de aportes: @ListaAportes.Count</label>
             <label>Total: @ListaAportes.Sum(a => a.Monto).ToString("N2")</label>
         </div>
     </div>
@@ -106,6 +110,7 @@
     @*Metodo para buscar segun el filtro elegido*@
     private async Task Buscar()
     {
+        @*Filtrar por id del aporte*@
         if (Filtro == "AporteId")
         {
             if (int.TryParse(ValorFiltro, out int AporteId))
@@ -114,10 +119,18 @@
                     .Listar(a => a.AporteId == AporteId);
             }
         }
+        @*Filtrar por fecha*@
         else if (Filtro == "Fecha")
         {
             ListaAportes = await aportesService
                 .Listar(a => a.FechaRegistro >= Desde && a.FechaRegistro <= Hasta);
+        }
+        @*Filtrar por nombre de la persona que realiza un aporte*@
+        else if (ValorFiltro.Trim() != "" && Filtro == "Nombre")
+        {
+            ListaAportes = await aportesService
+                .Listar(a => a.NombrePersona.ToLower()
+                    .Contains(ValorFiltro.ToLower()));
         }
     }
 
